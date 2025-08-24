@@ -20,12 +20,19 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [newsletterError, setNewsletterError] = useState('');
+  const [alreadySubscribed, setAlreadySubscribed] = useState(false);
 
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
     
     try {
+      setIsSubmitting(true);
+      setNewsletterStatus('idle');
+      setNewsletterError('');
+      setAlreadySubscribed(false);
+      
       const response = await fetch('/api/newsletter', {
         method: 'POST',
         headers: {
@@ -33,13 +40,28 @@ const Footer = () => {
         },
         body: JSON.stringify({ email }),
       });
+
+      const result = await response.json();
       
       if (response.ok) {
         setEmail('');
-        alert('Successfully subscribed to our newsletter!');
+        setNewsletterStatus('success');
+        setAlreadySubscribed(false);
+      } else {
+        // Check for duplicate email case (409 status)
+        if (response.status === 409) {
+          setEmail('');
+          setNewsletterStatus('success');
+          setAlreadySubscribed(true);
+        } else {
+          setNewsletterStatus('error');
+          setNewsletterError(result.error || 'Failed to subscribe. Please try again.');
+        }
       }
     } catch (error) {
-      alert('Something went wrong. Please try again.');
+      console.error('Newsletter subscription error:', error);
+      setNewsletterStatus('error');
+      setNewsletterError('Network error. Please check your connection and try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -68,7 +90,7 @@ const Footer = () => {
       { name: 'Report Bug', href: '/report-bug' },
     ],
   };
-
+   {/* social media links are to be added here */}
   const socialLinks = [
     { icon: FaFacebook, href: 'https://facebook.com', label: 'Facebook', hoverColor: 'hover:bg-blue-600' },
     { icon: FaTwitter, href: 'https://twitter.com', label: 'Twitter', hoverColor: 'hover:bg-sky-500' },
@@ -78,10 +100,8 @@ const Footer = () => {
   ];
 
   const contactInfo = [
-    { icon: FaMapMarkerAlt, text: '123 Tech Street, Digital City, DC 12345' },
-    { icon: FaPhone, text: '+1 (555) 123-4567' },
-    { icon: FaEnvelope, text: 'hello@evzonetech.com' },
-    { icon: FaClock, text: 'Mon - Fri: 9AM - 6PM EST' }
+    { icon: FaPhone, text: '+92 (322) 6088 970' },
+    { icon: FaEnvelope, text: 'queries@evzonetech.com' }
   ];
 
   return (
@@ -194,37 +214,76 @@ const Footer = () => {
                   )}
                 </button>
               </form>
+              
+              {/* Newsletter confirmation messages - with fixed height to prevent layout shift */}
+              <div className="h-10 mt-3">
+                {newsletterStatus === 'success' && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.4 }}
+                    className="bg-teal-500/20 backdrop-blur-sm rounded-lg py-2 px-3 text-white text-sm"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <svg className="w-4 h-4 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>
+                        {alreadySubscribed 
+                          ? "Already subscribed. Thank you!" 
+                          : "Thanks for subscribing!"}
+                      </span>
+                    </div>
+                  </motion.div>
+                )}
+                
+                {newsletterStatus === 'error' && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.4 }}
+                    className="bg-red-500/20 backdrop-blur-sm rounded-lg py-2 px-3 text-white text-sm"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <svg className="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>{newsletterError || 'Please try again'}</span>
+                    </div>
+                  </motion.div>
+                )}
+              </div>
             </div>
           </motion.div>
 
           {/* Main Content Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             
-            {/* Quick Links */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              viewport={{ once: true }}
-              className="space-y-6"
-            >
-              <h4 className="text-lg font-semibold text-white flex items-center space-x-2">
-                <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
-                <span>Services</span>
-              </h4>
-              <div className="space-y-3">
-                {['QA Testing', 'Automation', 'API Testing', 'Mobile Testing'].map((service, index) => (
-                  <Link
-                    key={index}
-                    href={`/services/${service.toLowerCase().replace(' ', '-')}`}
-                    className="block text-gray-400 hover:text-teal-400 transition-all duration-200 hover:translate-x-2 transform"
-                  >
-                    {service}
-                  </Link>
-                ))}
-              </div>
-            </motion.div>
-
+     
+{/* Quick Links */}
+<motion.div 
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8, delay: 0.1 }}
+  viewport={{ once: true }}
+  className="space-y-6"
+>
+  <h4 className="text-lg font-semibold text-white flex items-center space-x-2">
+    <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
+    <span>Services</span>
+  </h4>
+  <div className="space-y-3">
+    {['QA Testing', 'Automation', 'API Testing', 'Mobile Testing'].map((service, index) => (
+      <div
+        key={index}
+        className="block text-gray-400 hover:text-teal-400 transition-all duration-200 hover:translate-x-2 transform cursor-default"
+        title="Coming soon"
+      >
+        {service}
+      </div>
+    ))}
+  </div>
+</motion.div>
             {/* Company */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -241,8 +300,8 @@ const Footer = () => {
                 {[
                   { name: 'About Us', href: '/about' },
                   { name: 'Portfolio', href: '/portfolio' },
-                  { name: 'Careers', href: '/careers' },
-                  { name: 'Blog', href: '/blog' }
+                  { name: 'Contact Us', href: '/contact' },
+                  { name: 'Privacy Policy', href: '/privacy' }
                 ].map((link, index) => (
                   <Link
                     key={index}
@@ -312,19 +371,26 @@ const Footer = () => {
           </div>
 
           {/* Bottom Bar */}
-          <div className="border-t border-gray-800/50 pt-8">
+          <div className="border-t border-gray-800/50 pt-8 pb-5">
             <div className="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
               <motion.div 
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
-                className="flex items-center space-x-4"
+                className="flex items-center space-x-6 md:space-x-8" // Increased spacing
               >
-                <p className="text-gray-400 text-sm">
-                  © {currentYear} EvZone Tech. All rights reserved.
+                <p className="text-gray-400 text-sm px-2"> 
+                  © {currentYear} Evzone Tech.
                 </p>
-                <div className="hidden md:flex items-center space-x-2 text-xs text-gray-500">
+                
+                <div className="h-4 w-px bg-gray-700 hidden sm:block"></div> {/* Divider */}
+                
+                <p className="text-gray-400 text-sm px-2"> 
+                  All rights reserved.
+                </p>
+                
+                <div className="hidden md:flex items-center space-x-3 text-xs text-gray-500 ml-2"> 
                   <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                   <span>All systems operational</span>
                 </div>

@@ -180,23 +180,29 @@ const AboutPage = () => {
               </h2>
               
               <div className="space-y-6 text-lg text-gray-600 leading-relaxed">
-                <p>
-                  Founded in 2020, EvZone Tech emerged from a simple belief: technology 
-                  should empower businesses to achieve their full potential. What started 
-                  as a small team of passionate developers has grown into a full-service 
-                  digital agency trusted by startups and enterprises alike.
-                </p>
-                <p>
-                  Our journey began when we noticed a gap in the market for truly 
-                  personalized digital solutions. We saw too many businesses struggling 
-                  with one-size-fits-all approaches that didn't address their unique 
-                  challenges and opportunities.
-                </p>
-                <p>
-                  Today, we're proud to have helped over 100+ businesses transform 
-                  their digital presence and achieve measurable growth through 
-                  innovative technology solutions.
-                </p>
+<p>
+  Founded in 2020, EvZone Tech was built on a simple belief: technology 
+  should not only empower businesses but also deliver consistent quality. 
+  What began as a small team of passionate developers has evolved into a 
+  full-service digital agency where quality and reliability 
+  are the core of everything we do.
+</p>
+
+<p>
+  Our journey started when we recognized a gap in the market for truly 
+  tested and reliable digital solutions. Too many businesses were relying 
+  on one-size-fits-all approaches that overlooked performance, security, 
+  and long-term sustainability.
+</p>
+
+<p>
+  Today, we’re proud to have helped more than 100 businesses enhance 
+  their digital presence with solutions that are not only innovative, 
+  but also rigorously tested for quality, scalability, and performance. 
+  Every line of code we deliver goes through a careful QA process.
+ 
+</p>
+
               </div>
             </motion.div>
             

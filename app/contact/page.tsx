@@ -427,7 +427,7 @@ const ContactFormWithReCaptcha = () => {
                 className="space-y-6"
               >
                 <h2 className="text-4xl lg:text-5xl font-bold text-white leading-tight">
-                  Contact <span className="bg-gradient-to-r from-teal-400 to-blue-400 bg-clip-text text-transparent">New Web Order!</span>
+                  Turn <span className="bg-gradient-to-r from-teal-400 to-blue-400 bg-clip-text text-transparent">Your Idea Into Reality</span>
                 </h2>
                 <p className="text-lg text-gray-300">
                   If you have any questions or are interested in learning more about our services, please don't hesitate to contact us. You can reach us using the contact form, or directly through the provided email or phone number.
@@ -442,13 +442,13 @@ const ContactFormWithReCaptcha = () => {
                     <div className="w-10 h-10 rounded-full bg-teal-500/20 flex items-center justify-center">
                       <FaEnvelope className="text-teal-400" />
                     </div>
-                    <span className="text-white">hello@evzonetech.com</span>
+                    <span className="text-white">queries@evzonetech.com</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 rounded-full bg-teal-500/20 flex items-center justify-center">
                       <FaPhone className="text-teal-400" />
                     </div>
-                    <span className="text-white">+44 2848 7667 9</span>
+                    <span className="text-white">+92 (322) 6088 970</span>
                   </div>
                 </div>
               </motion.div>
@@ -607,7 +607,7 @@ const ContactFormWithReCaptcha = () => {
               className="text-center mb-12"
             >
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight">
-                We're Here to <span className="bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">Answere</span>
+                We're Here to <span className="bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">Answer</span>
               </h2>
               <p className="text-lg text-gray-600">
                 Have a question or need more information? We're just a message away and would love to hear from you.
@@ -734,10 +734,9 @@ const ContactFormWithReCaptcha = () => {
                   <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-3">
                     <span className="text-teal-600 text-xl">🏢</span>
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Our Office</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Our Main Office</h3>
                   <p className="text-gray-600">
-                    123 Business Street<br />
-                    Tech City, TC 12345
+                    Islamabad, Pakistan
                   </p>
                 </div>
               </motion.div>
@@ -754,7 +753,7 @@ const ContactFormWithReCaptcha = () => {
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Phone</h3>
                   <p className="text-gray-600">
-                    +44 2848 7667 9<br />
+                    +92 (322) 6088 970<br />
                     Available 24/7
                   </p>
                 </div>
@@ -772,8 +771,8 @@ const ContactFormWithReCaptcha = () => {
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Email</h3>
                   <p className="text-gray-600">
-                    hello@evzonetech.com<br />
-                    support@evzonetech.com
+                    queries@evzonetech.com<br />
+                    contact@evzonetech.com
                   </p>
                 </div>
               </motion.div>

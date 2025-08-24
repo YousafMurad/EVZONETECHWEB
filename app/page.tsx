@@ -645,114 +645,117 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+{/* Client Testimonials with fixed heights to prevent layout shift */}
+<section className="py-20 bg-white">
+  <div className="container mx-auto px-4">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
+      className="text-center mb-16"
+    >
+      <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight">
+        WHAT OUR <span className="bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">CLIENTS SAY</span>
+      </h2>
+      <p className="text-gray-600 max-w-3xl mx-auto">
+        Here what our clients are like about our collaboration and how we met their goals.
+      </p>
+    </motion.div>
 
-      {/* Client Testimonials with directional animations */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
+    <div className="max-w-4xl mx-auto relative">
+      {/* Previous Button */}
+      <button 
+        onClick={prevTestimonial}
+        className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-12 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200"
+      >
+        <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      {/* Testimonial Card with fixed heights to prevent layout shift */}
+      <motion.div 
+        drag="x" 
+        dragConstraints={{ left: 0, right: 0 }} 
+        dragElastic={0.2}
+        onDragEnd={(e, info) => {
+          if (info.offset.x < -100) {
+            setAnimationDirection('next');
+            nextTestimonial();
+          } else if (info.offset.x > 100) {
+            setAnimationDirection('prev');
+            prevTestimonial();
+          }
+        }}
+        className="bg-white border border-gray-200 rounded-2xl p-8 text-center shadow-sm cursor-grab active:cursor-grabbing"
+      >
+        {/* Star Rating */}
+        <div className="flex justify-center items-center mb-6">
+          {[...Array(5)].map((_, i) => (
+            <span key={i} className="text-yellow-400 text-2xl">★</span>
+          ))}
+        </div>
+        
+        {/* Testimonial Text with fixed height to prevent layout shift */}
+        <div className="min-h-[160px]"> {/* Fixed height container */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
+            key={currentTestimonial}
+            initial={{ opacity: 0, x: animationDirection === 'next' ? 50 : -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: animationDirection === 'next' ? -50 : 50 }}
+            transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight">
-              WHAT OUR <span className="bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">CLIENTS SAY</span>
-            </h2>
-            <p className="text-gray-600 max-w-3xl mx-auto">
-              Here what our clients are like about our collaboration and how we met their goals.
+            <p className="text-gray-700 text-lg leading-relaxed mb-8 max-w-3xl mx-auto">
+              "{testimonials[currentTestimonial].text}"
             </p>
           </motion.div>
-
-          <div className="max-w-4xl mx-auto relative">
-            {/* Previous Button */}
-            <button 
-              onClick={prevTestimonial}
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-12 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200"
-            >
-              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-
-            {/* Testimonial Card with proper directional animations */}
-            <motion.div 
-              drag="x" 
-              dragConstraints={{ left: 0, right: 0 }} 
-              dragElastic={0.2}
-              onDragEnd={(e, info) => {
-                if (info.offset.x < -100) {
-                  setAnimationDirection('next');
-                  nextTestimonial();
-                } else if (info.offset.x > 100) {
-                  setAnimationDirection('prev');
-                  prevTestimonial();
-                }
+        </div>
+        
+        {/* Client Info with fixed height */}
+        <div className="min-h-[80px] mb-4"> {/* Fixed height for client info */}
+          <div className="flex items-center justify-center">
+            <div 
+              className="w-14 h-14 rounded-full mr-4 flex items-center justify-center bg-teal-600 text-white font-bold text-xl"
+              style={{
+                background: `linear-gradient(135deg, #0d9488 0%, #2563eb 100%)`,
               }}
-              className="bg-white border border-gray-200 rounded-2xl p-8 text-center shadow-sm cursor-grab active:cursor-grabbing"
             >
-              {/* Star Rating */}
-              <div className="flex justify-center items-center mb-6">
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-yellow-400 text-2xl">★</span>
-                ))}
-              </div>
-              
-              {/* Testimonial Text with directional animation */}
-              <motion.div
-                key={currentTestimonial}
-                initial={{ opacity: 0, x: animationDirection === 'next' ? 50 : -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: animationDirection === 'next' ? -50 : 50 }}
-                transition={{ duration: 0.5 }}
-              >
-                <p className="text-gray-700 text-lg leading-relaxed mb-8 max-w-3xl mx-auto">
-                  "{testimonials[currentTestimonial].text}"
-                </p>
-                
-                {/* Client Info */}
-                <div className="flex items-center justify-center mb-8">
-                  <div 
-                    className="w-14 h-14 rounded-full mr-4 flex items-center justify-center bg-teal-600 text-white font-bold text-xl"
-                    style={{
-                      background: `linear-gradient(135deg, #0d9488 0%, #2563eb 100%)`,
-                    }}
-                  >
-                    {testimonials[currentTestimonial].name.split(' ').map(n => n[0]).join('')}
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 text-lg">{testimonials[currentTestimonial].name}</h4>
-                    <p className="text-gray-500">{testimonials[currentTestimonial].position}</p>
-                  </div>
-                </div>
-              </motion.div>
-              
-              {/* Navigation Dots */}
-              <div className="flex justify-center space-x-2">
-                {testimonials.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentTestimonial(index)}
-                    className={`w-3 h-3 rounded-full transition-colors duration-200 ${
-                      index === currentTestimonial ? 'bg-teal-600' : 'bg-gray-300 hover:bg-gray-400'
-                    }`}
-                  />
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Next Button */}
-            <button 
-              onClick={nextTestimonial}
-              className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-12 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200"
-            >
-              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
+              {testimonials[currentTestimonial].name.split(' ').map(n => n[0]).join('')}
+            </div>
+            <div>
+              <h4 className="font-semibold text-gray-900 text-lg">{testimonials[currentTestimonial].name}</h4>
+              <p className="text-gray-500">{testimonials[currentTestimonial].position}</p>
+            </div>
           </div>
         </div>
-      </section>
+        
+        {/* Navigation Dots */}
+        <div className="flex justify-center space-x-2">
+          {testimonials.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentTestimonial(index)}
+              className={`w-3 h-3 rounded-full transition-colors duration-200 ${
+                index === currentTestimonial ? 'bg-teal-600' : 'bg-gray-300 hover:bg-gray-400'
+              }`}
+            />
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Next Button */}
+      <button 
+        onClick={nextTestimonial}
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-12 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200"
+      >
+        <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
 
       {/* CTA Section  */}
       <section className="py-20 bg-gradient-to-r from-teal-600 to-green-600 text-white">
