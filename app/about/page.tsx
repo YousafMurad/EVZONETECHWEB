@@ -7,19 +7,19 @@ import { FaUsers } from 'react-icons/fa';
 const AboutPage = () => {
   const teamMembers = [
     {
-      name: 'Nouman Tahir',
+      name: 'M1',
       role: 'CTO',
       image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face',
       bio: 'Visionary leader with 10+ years in tech innovation.',
     },
     {
-      name: 'Arham Ali',
+      name: 'M2',
       role: 'CEO & Founder',
       image: 'https://images.unsplash.com/photo-1494790108755-2616b612b4fd?w=400&h=400&fit=crop&crop=face',
       bio: 'Full-stack developer passionate about scalable solutions.',
     },
     {
-      name: 'Abdullah',
+      name: 'M3',
       role: 'Lead QA Engineer',
       image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face',
       bio: 'Quality assurance expert ensuring flawless products.',
@@ -497,8 +497,8 @@ const AboutPage = () => {
           </div>
         </div>
       </section>
-
-      {/* Team Section */}
+  
+{/*}  
       <section className="py-16 lg:py-20 bg-white">
         <div className="container mx-auto px-4">
           <motion.div
@@ -534,8 +534,6 @@ const AboutPage = () => {
                         alt={member.name}
                         className={`w-full object-cover ${index === 1 ? 'h-72' : 'h-60'}`}
                       />
-                      
-                      {/* Updated name tag design - all with teal background */}
                       <div className={`absolute bottom-0 left-0 right-0 text-center bg-teal-500 text-white ${
                         index === 1 ? 'py-6 px-4' : 'py-5 px-4'
                       }`}>
@@ -553,8 +551,10 @@ const AboutPage = () => {
             </div>
           </div>
         </div>
-      </section>
-
+      </section>  
+      
+ */}
+                        
       {/* Contact Section */}
       <section className="py-16 lg:py-20 bg-gradient-to-br from-teal-600 to-teal-700">
         <div className="container mx-auto px-4">
