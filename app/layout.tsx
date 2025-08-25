@@ -15,6 +15,15 @@ export const metadata = {
   authors: [{ name: 'EvZone Tech' }],
   creator: 'EvZone Tech',
   publisher: 'EvZone Tech',
+  
+  // Add icons configuration
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.png', type: 'image/png' }
+    ],
+  },
+  
   openGraph: {
     title: 'Evzone Tech',
     description: 'Leading provider of software quality assurance and testing solutions.',
@@ -56,6 +65,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/* Add this direct link tag */}
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+      </head>
       <body className={inter.className}>
         <AuthProvider>
           <div className="min-h-screen flex flex-col">

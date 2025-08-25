@@ -14,19 +14,46 @@ const HomePage = () => {
 
   const testimonials = [
     {
-      text: "With Evzone's QA testing, our app performance improved by 40%, and user complaints dropped to nearly zero. Their automated testing saved us countless hours, and their attention to detail is unmatched. I highly recommend them for any serious development project.",
+      text: "EvZone's QA team helped us identify critical bugs in our payment processing system before launch. Their methodical approach to regression testing saved us from a potentially disastrous rollout. The detailed documentation they provided made it easy for our developers to fix issues quickly.",
       name: "Sarah Johnson",
-      position: "CTO, InnovateTech"
+      position: "CTO, InnovateTech",
+      rating: 5,
+      image: "/images/testimonials/sarah-johnson.jpg"
     },
     {
-      text: "Evzone's team delivered exceptional quality assurance services. Their thorough testing approach helped us identify critical issues before launch, saving us time and money. Highly professional and reliable.",
+      text: "We hired EvZone for automated testing implementation and they delivered excellent results. Their team adapted well to our Agile workflow. While their communication was sometimes delayed, the quality of work was consistently high. Would recommend for projects with flexible timelines.",
       name: "Michael Chen",
-      position: "Product Manager, TechFlow"
+      position: "Product Manager, TechFlow",
+      rating: 4,
+      image: "/images/testimonials/michael-chen.jpg"
     },
     {
-      text: "Outstanding QA services! Their automated testing framework reduced our testing time by 60% while improving coverage. The team is knowledgeable, responsive, and delivers on time.",
+      text: "EvZone's performance testing uncovered scalability issues our internal team missed. Their insights helped us optimize database queries that were causing bottlenecks. The only reason for 4 stars is that onboarding took longer than expected, but once they were up to speed, they exceeded expectations.",
       name: "Emily Rodriguez",
-      position: "Engineering Lead, DataSync"
+      position: "Engineering Lead, DataSync",
+      rating: 4,
+      image: "/images/testimonials/emily-rodriguez.jpg"
+    },
+    {
+      text: "Truly exceptional service! Our app's crash rate dropped by 90% after implementing EvZone's test automation framework. They were proactive about finding edge cases we hadn't considered. Their QA engineers integrated seamlessly with our team and felt like part of our company.",
+      name: "David Park",
+      position: "VP of Engineering, MobileFirst",
+      rating: 3,
+      image: "/images/testimonials/david-park.jpg"
+    },
+    {
+      text: "EvZone handled our API testing needs for our healthcare platform. While they did find several critical security vulnerabilities, we found their documentation could be more detailed. They're great at testing but we needed more comprehensive reports for our compliance requirements.",
+      name: "Jennifer Adams",
+      position: "Security Officer, HealthLink",
+      rating: 3,
+      image: "/images/testimonials/jennifer-adams.jpg"
+    },
+    {
+      text: "We brought EvZone in for a last-minute project with tight deadlines, and they delivered. Their ability to quickly understand our codebase and set up an effective testing strategy was impressive. The team worked weekends to ensure we met our launch date without compromising quality.",
+      name: "Robert Martinez",
+      position: "Project Manager, FastTrack Solutions",
+      rating: 5,
+      image: "/images/testimonials/robert-martinez.jpg"
     }
   ];
 
@@ -693,7 +720,12 @@ const HomePage = () => {
         {/* Star Rating */}
         <div className="flex justify-center items-center mb-6">
           {[...Array(5)].map((_, i) => (
-            <span key={i} className="text-yellow-400 text-2xl">★</span>
+            <span 
+              key={i} 
+              className={`text-2xl ${i < testimonials[currentTestimonial].rating ? "text-yellow-400" : "text-gray-300"}`}
+            >
+              ★
+            </span>
           ))}
         </div>
         
