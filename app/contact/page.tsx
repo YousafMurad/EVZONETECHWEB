@@ -76,9 +76,9 @@ const ContactFormWithReCaptcha = () => {
       if (executeRecaptcha) {
         try {
           recaptchaToken = await executeRecaptcha('contact_form');
-        } catch (recaptchaError) {
-          console.error('reCAPTCHA error:', recaptchaError);
-          // Continue without reCAPTCHA if there's an error
+        } catch (err) {
+          console.error('reCAPTCHA error:', err);
+          // Continue without reCAPTCHA
         }
       }
       
