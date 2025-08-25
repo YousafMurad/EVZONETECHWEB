@@ -1,5 +1,6 @@
 'use client';
 
+import ContactReCaptcha from '@/components/ContactReCaptcha';
 import { motion } from 'framer-motion';
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
@@ -786,22 +787,9 @@ const ContactFormWithReCaptcha = () => {
 
 const ContactPage = () => {
   return (
-    // Make reCAPTCHA optional by checking if the key exists
-    process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ? (
-      <GoogleReCaptchaProvider
-        reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-        scriptProps={{
-          async: true,
-          defer: true,
-          appendTo: 'body'
-        }}
-      >
-        <ContactFormWithReCaptcha />
-      </GoogleReCaptchaProvider>
-    ) : (
-      // Fallback when no reCAPTCHA key is available
+    <ContactReCaptcha>
       <ContactFormWithReCaptcha />
-    )
+    </ContactReCaptcha>
   );
 };
 
