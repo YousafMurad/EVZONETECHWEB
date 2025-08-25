@@ -46,7 +46,27 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // TODO: Verify reCAPTCHA token if needed
+    // Verify reCAPTCHA token
+    if (recaptchaToken) {
+      try {
+        const recaptchaResponse = await fetch(
+          `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
+          { method: 'POST' }
+        );
+        
+        const recaptchaData = await recaptchaResponse.json();
+        
+        if (!recaptchaData.success) {
+          return NextResponse.json(
+            { error: "reCAPTCHA verification failed" },
+            { status: 400 }
+          );
+        }
+      } catch (error) {
+        console.error('reCAPTCHA verification error:', error);
+        // Continue processing if reCAPTCHA verification fails but log the error
+      }
+    }
 
     // Store in Google Sheets (existing functionality)
     const sheetResult = await addContactSubmission({
