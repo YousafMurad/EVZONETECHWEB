@@ -4,7 +4,6 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import { AuthProvider } from '@/contexts/AuthContextTemp'
 import Link from 'next/link'
-import RecaptchaProvider from '@/components/RecaptchaProvider';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -72,15 +71,13 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <AuthProvider>
-          <RecaptchaProvider>
-            <div className="min-h-screen flex flex-col">
-              <Navbar />
-              <main className="flex-grow">
-                {children}
-              </main>
-              <Footer />
-            </div>
-          </RecaptchaProvider>
+          <div className="min-h-screen flex flex-col">
+            <Navbar />
+            <main className="flex-grow">
+              {children}
+            </main>
+            <Footer />
+          </div>
         </AuthProvider>
       </body>
     </html>
