@@ -256,39 +256,13 @@ const Footer = () => {
             </div>
           </motion.div>
 
-          {/* Main Content Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            
-     
-{/* Quick Links */}
-<motion.div 
-  initial={{ opacity: 0, y: 20 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8, delay: 0.1 }}
-  viewport={{ once: true }}
-  className="space-y-6"
->
-  <h4 className="text-lg font-semibold text-white flex items-center space-x-2">
-    <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
-    <span>Services</span>
-  </h4>
-  <div className="space-y-3">
-    {['QA Testing', 'Automation', 'API Testing', 'Mobile Testing'].map((service, index) => (
-      <div
-        key={index}
-        className="block text-gray-400 hover:text-teal-400 transition-all duration-200 hover:translate-x-2 transform cursor-default"
-        title="Coming soon"
-      >
-        {service}
-      </div>
-    ))}
-  </div>
-</motion.div>
-            {/* Company */}
+          {/* Main Content Grid - Updated from 4 to 3 columns */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            {/* Company - Now first column */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
               viewport={{ once: true }}
               className="space-y-6"
             >
@@ -314,11 +288,11 @@ const Footer = () => {
               </div>
             </motion.div>
 
-            {/* Contact Info */}
+            {/* Contact Info - Now second column */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
               className="space-y-6"
             >
@@ -336,11 +310,11 @@ const Footer = () => {
               </div>
             </motion.div>
 
-            {/* Social Media */}
+            {/* Social Media - Now third column */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
               className="space-y-6"
             >
@@ -404,9 +378,7 @@ const Footer = () => {
                 className="flex space-x-6"
               >
                 {[
-                  { name: 'Privacy', href: '/privacy' },
-                  { name: 'Terms', href: '/terms' },
-                  { name: 'Security', href: '/security' }
+                  { name: 'Privacy', href: '/privacy' }
                 ].map((link, index) => (
                   <Link
                     key={index}
