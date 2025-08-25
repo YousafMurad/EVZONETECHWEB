@@ -645,7 +645,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-{/* Client Testimonials with fixed heights to prevent layout shift */}
+{/* Client Testimonials with better mobile height control */}
 <section className="py-20 bg-white">
   <div className="container mx-auto px-4">
     <motion.div
@@ -667,14 +667,14 @@ const HomePage = () => {
       {/* Previous Button */}
       <button 
         onClick={prevTestimonial}
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-12 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200"
+        className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-6 sm:-translate-x-12 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200 z-10"
       >
         <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
       </button>
 
-      {/* Testimonial Card with fixed heights to prevent layout shift */}
+      {/* Testimonial Card with absolute positioning for content */}
       <motion.div 
         drag="x" 
         dragConstraints={{ left: 0, right: 0 }} 
@@ -697,41 +697,53 @@ const HomePage = () => {
           ))}
         </div>
         
-        {/* Testimonial Text with fixed height to prevent layout shift */}
-        <div className="min-h-[160px]"> {/* Fixed height container */}
-          <motion.div
-            key={currentTestimonial}
-            initial={{ opacity: 0, x: animationDirection === 'next' ? 50 : -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: animationDirection === 'next' ? -50 : 50 }}
-            transition={{ duration: 0.5 }}
-          >
-            <p className="text-gray-700 text-lg leading-relaxed mb-8 max-w-3xl mx-auto">
-              "{testimonials[currentTestimonial].text}"
-            </p>
-          </motion.div>
+        {/* Testimonial Text with fixed height */}
+        <div className="relative h-[200px] sm:h-[160px] mb-8"> {/* Taller on mobile */}
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={currentTestimonial}
+              initial={{ opacity: 0, x: animationDirection === 'next' ? 50 : -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: animationDirection === 'next' ? -50 : 50 }}
+              transition={{ duration: 0.5 }}
+              className="absolute inset-0 flex items-center justify-center"
+            >
+              <p className="text-gray-700 text-lg leading-relaxed max-w-3xl">
+                "{testimonials[currentTestimonial].text}"
+              </p>
+            </motion.div>
+          </AnimatePresence>
         </div>
         
         {/* Client Info with fixed height */}
-        <div className="min-h-[80px] mb-4"> {/* Fixed height for client info */}
-          <div className="flex items-center justify-center">
-            <div 
-              className="w-14 h-14 rounded-full mr-4 flex items-center justify-center bg-teal-600 text-white font-bold text-xl"
-              style={{
-                background: `linear-gradient(135deg, #0d9488 0%, #2563eb 100%)`,
-              }}
+        <div className="h-[100px] sm:h-[80px]"> {/* Taller on mobile */}
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={currentTestimonial}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="flex items-center justify-center"
             >
-              {testimonials[currentTestimonial].name.split(' ').map(n => n[0]).join('')}
-            </div>
-            <div>
-              <h4 className="font-semibold text-gray-900 text-lg">{testimonials[currentTestimonial].name}</h4>
-              <p className="text-gray-500">{testimonials[currentTestimonial].position}</p>
-            </div>
-          </div>
+              <div 
+                className="w-14 h-14 rounded-full mr-4 flex items-center justify-center bg-teal-600 text-white font-bold text-xl"
+                style={{
+                  background: `linear-gradient(135deg, #0d9488 0%, #2563eb 100%)`,
+                }}
+              >
+                {testimonials[currentTestimonial].name.split(' ').map(n => n[0]).join('')}
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-900 text-lg">{testimonials[currentTestimonial].name}</h4>
+                <p className="text-gray-500">{testimonials[currentTestimonial].position}</p>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
         
         {/* Navigation Dots */}
-        <div className="flex justify-center space-x-2">
+        <div className="flex justify-center space-x-2 mt-2">
           {testimonials.map((_, index) => (
             <button
               key={index}
@@ -747,7 +759,7 @@ const HomePage = () => {
       {/* Next Button */}
       <button 
         onClick={nextTestimonial}
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-12 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200"
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-6 sm:translate-x-12 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200 z-10"
       >
         <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
