@@ -446,14 +446,14 @@ const PortfolioPage = () => {
         </section>
       )}
 
-      {/* All Projects Grid */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
+      {/* All Projects Grid - Fixed for mobile */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="container mx-auto px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            className="text-center mb-12 sm:mb-16"
           >
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight">
               {activeFilter === 'All' ? (
@@ -467,42 +467,42 @@ const PortfolioPage = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8">
             {filteredProjects.map((project, index) => (
               <motion.div
                 key={project.id}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 w-full"
               >
-                <div className="h-48 bg-gradient-to-br from-teal-500 to-purple-600 relative">
+                <div className="h-40 sm:h-48 bg-gradient-to-br from-teal-500 to-purple-600 relative">
                   <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
-                    <h3 className="text-white text-xl font-bold text-center px-4">
+                    <h3 className="text-white text-lg sm:text-xl font-bold text-center px-4 max-w-full">
                       {project.title}
                     </h3>
                   </div>
                   {project.featured && (
-                    <div className="absolute top-4 right-4 bg-yellow-500 text-yellow-900 px-2 py-1 rounded-full text-xs font-bold">
+                    <div className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-yellow-500 text-yellow-900 px-2 py-1 rounded-full text-xs font-bold">
                       Featured
                     </div>
                   )}
                 </div>
                 
-                <div className="p-6">
-                  <div className="mb-4">
+                <div className="p-4 sm:p-6">
+                  <div className="mb-3 sm:mb-4">
                     <span className="inline-block bg-teal-100 text-teal-700 px-2 py-1 rounded-full text-xs font-medium">
                       {project.category}
                     </span>
                   </div>
                   
-                  <p className="text-gray-600 mb-4 leading-relaxed">
+                  <p className="text-sm sm:text-base text-gray-600 mb-4 leading-relaxed line-clamp-3">
                     {project.description}
                   </p>
                   
                   <div className="mb-4">
                     <div className="flex flex-wrap gap-1">
-                      {project.technologies.slice(0, 3).map((tech, techIndex) => (
+                      {project.technologies.slice(0, 2).map((tech, techIndex) => (
                         <span
                           key={techIndex}
                           className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs"
@@ -510,20 +510,20 @@ const PortfolioPage = () => {
                           {tech}
                         </span>
                       ))}
-                      {project.technologies.length > 3 && (
+                      {project.technologies.length > 2 && (
                         <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">
-                          +{project.technologies.length - 3} more
+                          +{project.technologies.length - 2} more
                         </span>
                       )}
                     </div>
                   </div>
                   
-                  <div className="flex space-x-3">
+                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                     <a
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 bg-teal-600 hover:bg-teal-700 text-white text-center px-4 py-2 rounded-lg transition-colors duration-200 text-sm font-medium"
+                      className="bg-teal-600 hover:bg-teal-700 text-white text-center px-3 py-2 rounded-lg transition-colors duration-200 text-sm font-medium"
                     >
                       Live Demo
                     </a>
@@ -531,7 +531,7 @@ const PortfolioPage = () => {
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 border border-gray-300 hover:border-teal-600 hover:text-teal-600 text-gray-700 text-center px-4 py-2 rounded-lg transition-colors duration-200 text-sm font-medium"
+                      className="border border-gray-300 hover:border-teal-600 hover:text-teal-600 text-gray-700 text-center px-3 py-2 rounded-lg transition-colors duration-200 text-sm font-medium"
                     >
                       View Code
                     </a>

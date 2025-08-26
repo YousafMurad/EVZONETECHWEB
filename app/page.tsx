@@ -243,7 +243,7 @@ const HomePage = () => {
       </section>
 
       {/* Services Section - keep responsive improvements consistent */}
-      <section className="py-12 md:py-16 lg:py-20 bg-gray-50">
+      <section id="services" className="py-12 md:py-16 lg:py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           {/* Services Heading */}
           <motion.div
@@ -672,15 +672,15 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-{/* Client Testimonials with better mobile height control */}
-<section className="py-20 bg-white">
+{/* Client Testimonials - Fixed for Mobile */}
+<section className="py-16 bg-white overflow-hidden">
   <div className="container mx-auto px-4">
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true }}
-      className="text-center mb-16"
+      className="text-center mb-10"
     >
       <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight">
         WHAT OUR <span className="bg-gradient-to-r from-teal-600 to-blue-600 bg-clip-text text-transparent">CLIENTS SAY</span>
@@ -694,14 +694,15 @@ const HomePage = () => {
       {/* Previous Button */}
       <button 
         onClick={prevTestimonial}
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-6 sm:-translate-x-12 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200 z-10"
+        className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-2 sm:-translate-x-8 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200 z-10"
+        aria-label="Previous testimonial"
       >
         <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
       </button>
 
-      {/* Testimonial Card with absolute positioning for content */}
+      {/* Testimonial Card - Fixed for Mobile */}
       <motion.div 
         drag="x" 
         dragConstraints={{ left: 0, right: 0 }} 
@@ -715,14 +716,14 @@ const HomePage = () => {
             prevTestimonial();
           }
         }}
-        className="bg-white border border-gray-200 rounded-2xl p-8 text-center shadow-sm cursor-grab active:cursor-grabbing"
+        className="bg-white border border-gray-200 rounded-2xl px-6 py-8 sm:p-8 text-center shadow-sm cursor-grab active:cursor-grabbing relative"
       >
         {/* Star Rating */}
-        <div className="flex justify-center items-center mb-6">
+        <div className="flex justify-center items-center mb-4 sm:mb-6">
           {[...Array(5)].map((_, i) => (
             <span 
               key={i} 
-              className={`text-2xl ${i < testimonials[currentTestimonial].rating ? "text-yellow-400" : "text-gray-300"}`}
+              className={`text-xl sm:text-2xl ${i < testimonials[currentTestimonial].rating ? "text-yellow-400" : "text-gray-300"}`}
             >
               ★
             </span>
@@ -730,7 +731,7 @@ const HomePage = () => {
         </div>
         
         {/* Testimonial Text with fixed height */}
-        <div className="relative h-[200px] sm:h-[160px] mb-8"> {/* Taller on mobile */}
+        <div className="relative h-[240px] sm:h-[160px] mb-6">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={currentTestimonial}
@@ -740,15 +741,15 @@ const HomePage = () => {
               transition={{ duration: 0.5 }}
               className="absolute inset-0 flex items-center justify-center"
             >
-              <p className="text-gray-700 text-lg leading-relaxed max-w-3xl">
+              <p className="text-gray-700 text-base sm:text-lg leading-relaxed max-w-3xl">
                 "{testimonials[currentTestimonial].text}"
               </p>
             </motion.div>
           </AnimatePresence>
         </div>
         
-        {/* Client Info with fixed height */}
-        <div className="h-[100px] sm:h-[80px]"> {/* Taller on mobile */}
+        {/* Client Info */}
+        <div className="h-[80px] sm:h-[60px]">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={currentTestimonial}
@@ -759,30 +760,31 @@ const HomePage = () => {
               className="flex items-center justify-center"
             >
               <div 
-                className="w-14 h-14 rounded-full mr-4 flex items-center justify-center bg-teal-600 text-white font-bold text-xl"
+                className="w-12 h-12 rounded-full mr-3 flex items-center justify-center bg-teal-600 text-white font-bold text-lg"
                 style={{
                   background: `linear-gradient(135deg, #0d9488 0%, #2563eb 100%)`,
                 }}
               >
                 {testimonials[currentTestimonial].name.split(' ').map(n => n[0]).join('')}
               </div>
-              <div>
-                <h4 className="font-semibold text-gray-900 text-lg">{testimonials[currentTestimonial].name}</h4>
-                <p className="text-gray-500">{testimonials[currentTestimonial].position}</p>
+              <div className="text-left">
+                <h4 className="font-semibold text-gray-900 text-base sm:text-lg">{testimonials[currentTestimonial].name}</h4>
+                <p className="text-gray-500 text-sm">{testimonials[currentTestimonial].position}</p>
               </div>
             </motion.div>
           </AnimatePresence>
         </div>
         
         {/* Navigation Dots */}
-        <div className="flex justify-center space-x-2 mt-2">
+        <div className="flex justify-center space-x-2 mt-6">
           {testimonials.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentTestimonial(index)}
-              className={`w-3 h-3 rounded-full transition-colors duration-200 ${
+              className={`w-2.5 h-2.5 rounded-full transition-colors duration-200 ${
                 index === currentTestimonial ? 'bg-teal-600' : 'bg-gray-300 hover:bg-gray-400'
               }`}
+              aria-label={`Go to testimonial ${index + 1}`}
             />
           ))}
         </div>
@@ -791,7 +793,8 @@ const HomePage = () => {
       {/* Next Button */}
       <button 
         onClick={nextTestimonial}
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-6 sm:translate-x-12 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200 z-10"
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-2 sm:translate-x-8 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-200 z-10"
+        aria-label="Next testimonial"
       >
         <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

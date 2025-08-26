@@ -1,90 +1,92 @@
-import { NextRequest, NextResponse } from 'next/server'
-import connectToDatabase from '@/lib/mongodb'
-import Contact from '@/models/Contact'
+import { NextRequest, NextResponse } from 'next/server';
+import { addContactSubmission } from '@/lib/googleSheetsClient';
+import { sendContactFormEmail } from '@/lib/emailService';
+import { RateLimiter } from '@/lib/rateLimiter';
 
-export async function POST(request: NextRequest) {
+// Create a rate limiter for contact form submissions
+const limiter = RateLimiter({
+  interval: 60 * 1000, // 1 minute
+  limit: 3, // 3 requests per minute
+  uniqueTokenPerInterval: 500
+});
+
+export async function POST(req: NextRequest) {
   try {
-    const { name, email, subject, message, recaptchaToken } = await request.json()
+    // Get client IP for rate limiting
+    const forwardedFor = req.headers.get('x-forwarded-for');
+    const ip = forwardedFor ? forwardedFor.split(',')[0] : '127.0.0.1';
+    
+    // Apply rate limiting
+    try {
+      await limiter.check(Date.now(), ip);
+    } catch {
+      return NextResponse.json(
+        { error: 'Too many requests, please try again later.' },
+        { status: 429 }
+      );
+    }
+
+    // Parse request body
+    const { fullName, email, projectType, priority, projectScope, recaptchaToken } = await req.json();
 
     // Validate required fields
-    if (!name || !email || !subject || !message) {
+    if (!fullName || !email || !projectScope) {
       return NextResponse.json(
-        { error: 'All fields are required' },
+        { error: 'Missing required fields' },
         { status: 400 }
-      )
+      );
     }
-
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    
+    // Simple email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return NextResponse.json(
-        { error: 'Invalid email format' },
+        { error: 'Please enter a valid email address' },
         { status: 400 }
-      )
+      );
     }
 
-    // Verify reCAPTCHA if token is provided
-    if (recaptchaToken && recaptchaToken !== "no-recaptcha") {
-      try {
-        const verifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
-        const recaptchaResponse = await fetch(verifyUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
-        });
-        
-        const recaptchaResult = await recaptchaResponse.json();
-        
-        if (!recaptchaResult.success) {
-          return NextResponse.json({ error: "reCAPTCHA verification failed" }, { status: 400 });
-        }
-      } catch (error) {
-        console.error("reCAPTCHA verification error:", error);
-        // Continue if reCAPTCHA verification fails, but log the error
-      }
-    }
+    // TODO: Verify reCAPTCHA token if needed
 
-    // Connect to database
-    await connectToDatabase()
-
-    // Create new contact
-    const contact = new Contact({
-      name,
+    // Store in Google Sheets (existing functionality)
+    const sheetResult = await addContactSubmission({
+      fullName,
       email,
-      subject,
-      message,
-      createdAt: new Date()
-    })
+      projectType,
+      priority,
+      projectScope
+    });
 
-    await contact.save()
+    // Send email notifications (new functionality)
+    const emailResult = await sendContactFormEmail({
+      fullName,
+      email,
+      projectType,
+      priority,
+      projectScope
+    });
 
-    return NextResponse.json(
-      { message: 'Contact form submitted successfully' },
-      { status: 201 }
-    )
+    // Return appropriate response based on combined results
+    if (sheetResult.success && emailResult) {
+      return NextResponse.json({ success: true });
+    } else if (sheetResult.success) {
+      // Still consider the submission successful if just the email fails
+      console.warn('Contact form submission saved to sheets but email failed to send');
+      return NextResponse.json({ 
+        success: true, 
+        warning: 'Your submission was received, but confirmation email could not be sent.' 
+      });
+    } else {
+      return NextResponse.json(
+        { error: sheetResult.error || 'Failed to process your submission.' },
+        { status: 500 }
+      );
+    }
   } catch (error) {
-    console.error('Contact form error:', error)
+    console.error('Contact API error:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
-    )
+    );
   }
 }
-
-export async function GET() {
-  try {
-    await connectToDatabase()
-    const contacts = await Contact.find().sort({ createdAt: -1 })
-    
-    return NextResponse.json(contacts, { status: 200 })
-  } catch (error) {
-    console.error('Error fetching contacts:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
-  }
-}
-

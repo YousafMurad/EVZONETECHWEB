@@ -302,9 +302,11 @@ const AboutPage = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <button className="bg-teal-600 hover:bg-white hover:text-black hover:border-teal-600 border border-transparent text-white px-6 py-2 rounded-md font-medium transition-all duration-300">
+                {/*     <button className="bg-teal-600 hover:bg-white hover:text-black hover:border-teal-600 border border-transparent text-white px-6 py-2 rounded-md font-medium transition-all duration-300">
                     View More
                   </button>
+                  */}
+                  
                 </motion.div>
               </div>
               
@@ -378,9 +380,11 @@ const AboutPage = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <button className="bg-teal-600 hover:bg-white hover:text-black hover:border-teal-600 border border-transparent text-white px-6 py-2 rounded-md font-medium transition-all duration-300">
+         {/*     <button className="bg-teal-600 hover:bg-white hover:text-black hover:border-teal-600 border border-transparent text-white px-6 py-2 rounded-md font-medium transition-all duration-300">
                     View More
                   </button>
+                  */}
+                  
                 </motion.div>
               </div>
             </motion.div>
@@ -404,9 +408,11 @@ const AboutPage = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <button className="bg-teal-600 hover:bg-white hover:text-black hover:border-teal-600 border border-transparent text-white px-6 py-2 rounded-md font-medium transition-all duration-300">
+             {/*     <button className="bg-teal-600 hover:bg-white hover:text-black hover:border-teal-600 border border-transparent text-white px-6 py-2 rounded-md font-medium transition-all duration-300">
                     View More
                   </button>
+                  */}
+
                 </motion.div>
               </div>
 
